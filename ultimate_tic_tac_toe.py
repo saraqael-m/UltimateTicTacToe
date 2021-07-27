@@ -1,8 +1,8 @@
-import cv2, sys, numpy as np; from copy import deepcopy, copy; from random import shuffle; from tqdm import tqdm
+import cv2, sys, numpy as np, tkinter as tk; from copy import deepcopy, copy; from random import shuffle; from tqdm import tqdm
 
 class Board:
 
-	def __init__(self, name = "Ultra Tic Tac Toe", big_board = np.zeros([3,3], dtype=int), small_boards = np.zeros([3,3,3,3], dtype=int), selected_board = [None, None], show_image = True) -> None:
+	def __init__(self, name = "Ultimate Tic Tac Toe", big_board = np.zeros([3,3], dtype=int), small_boards = np.zeros([3,3,3,3], dtype=int), selected_board = [None, None], show_image = True) -> None:
 		self.show_image = show_image
 		self.big_board = big_board # every conquered small board
 		self.small_boards = small_boards # every position of every player
@@ -19,18 +19,18 @@ class Board:
 			return
 		if abs(marker_type) == 1:
 			self.small_boards[marker_pos[0], marker_pos[1], marker_pos[2], marker_pos[3]] = marker_type
+			self.winner = self.draw_wins()
 			self.selected_board = [marker_pos[2], marker_pos[3]] if self.big_board[marker_pos[2], marker_pos[3]] == 0 else [None, None]
 		elif marker_type == 0:
 			self.small_boards[marker_pos[0], marker_pos[1], marker_pos[2], marker_pos[3]] = 0
-			self.big_board[marker_pos[0], marker_pos[1]] = 0#self.board_win_check(self.small_boards[marker_pos[0], marker_pos[1]])
+			self.big_board[marker_pos[0], marker_pos[1]] = 0
 		else:
 			raise ValueError("Marker Type "+str(marker_type)+" non-existent.")
 		if self.show_image:
 			self.window.draw_small_marker(marker_pos, marker_type)
 			self.window.highlight_selected_board()
-		self.winner = self.draw_wins()
-		if self.winner != 0 and self.show_image:
-			self.window.remove_highlighting()
+			if self.winner != 0:
+				self.window.remove_highlighting()
 
 	def place_big_marker(self, marker_pos : list, marker_type : int) -> None:
 		'''Places big circle or cross (indicates win of small board) at position on board into array'''
@@ -59,9 +59,9 @@ class Board:
 			return 1
 		if -3 in sum_list: # cross wins
 			return -1
-		if 0 not in list(self.big_board.flatten()): # ties
-			return 10
-		return 0
+		if 0 in list(board.flatten()): # ties
+			return 0
+		return 10
 
 	def place_marker_by_mouse(self, mouse_x : int, mouse_y : int, marker_type : int) -> bool:
 		'''Convert mouse position to position in grid and place marker'''
@@ -269,10 +269,65 @@ class Computer:
 		if self.reset_max_depth != 0:
 			self.max_recursion_depth = min(self.reset_depth, self.max_recursion_depth + self.reset_max_depth)
 
+class GameSelection:
+
+	def __init__(self, controller) -> None:
+		self.window = tk.Tk()
+		self.controller = controller
+		self.com1_val, self.com2_val = 2, 2
+		self.add_widgets()
+		self.window.mainloop()
+
+	def add_widgets(self) -> None:
+		title = tk.Label(self.window, text="Ultimate Tic Tac Toe")
+		pvp_btn = tk.Button(self.window, text="Player vs Player", command=self.pvp)
+		pvc_btn = tk.Button(self.window, text="Player vs Computer", command=self.pvc)
+		#cvp_btn = tk.Button(self.window, text="Computer vs Player")
+		cvc_btn = tk.Button(self.window, text="Computer vs Computer", command=self.cvc)
+		exit_btn = tk.Button(self.window, text="Exit", command=sys.exit)
+		for i in [title, pvp_btn, pvc_btn, cvc_btn, exit_btn]:
+			i.pack()
+
+	def val1(self, val):
+		self.com1_val = int(val)
+
+	def val2(self, val):
+		self.com2_val = int(val)
+
+	def pvp(self) -> None:
+		self.window.destroy()
+		self.controller.player_vs_player()
+
+	def pvc(self) -> None:
+		self.window.destroy()
+		window = tk.Tk()
+		com1_lbl = tk.Label(window, text="Computer Difficulty")
+		com1_scl = tk.Scale(window, from_=1, to=8, orient=tk.HORIZONTAL, command=self.val1)
+		start_btn = tk.Button(window, text="Start", command=window.destroy)
+		exit_btn = tk.Button(window, text="Exit", command=sys.exit)
+		for i in [com1_lbl, com1_scl, start_btn, exit_btn]:
+			i.pack()
+		window.mainloop()
+		self.controller.player_vs_computer(self.com1_val+1)
+
+	def cvc(self) -> None:
+		self.window.destroy()
+		window = tk.Tk()
+		com1_lbl = tk.Label(window, text="Computer 1 Difficulty")
+		com1_scl = tk.Scale(window, from_=1, to=8, orient=tk.HORIZONTAL, command=self.val1)
+		com2_lbl = tk.Label(window, text="Computer 2 Difficulty")
+		com2_scl = tk.Scale(window, from_=1, to=8, orient=tk.HORIZONTAL, command=self.val2)
+		start_btn = tk.Button(window, text="Start", command=window.destroy)
+		exit_btn = tk.Button(window, text="Exit", command=sys.exit)
+		for i in [com1_lbl, com1_scl, com2_lbl, com2_scl, start_btn, exit_btn]:
+			i.pack()
+		window.mainloop()
+		self.controller.computer_vs_computer(self.com1_val+1, self.com2_val+1)
+
 class Controller:
 
 	def __init__(self) -> None:
-		pass
+		self.game_selection = GameSelection(self)
 
 	def start(self) -> None:
 		'''Initializes values needed to start the game'''
@@ -281,7 +336,7 @@ class Controller:
 
 	def player_vs_player(self, starter = -1) -> None:
 		'''Two player game'''
-		self.name = "Ultra Tic Tac Toe: Player vs Player"
+		self.name = "Ultimate Tic Tac Toe: Player vs Player"
 		self.start()
 		players = [Player(board = self.board, mouse = self.mouse, marker_type = starter), Player(board = self.board, mouse = self.mouse, marker_type = starter*(-1))]
 		while self.board.winner == 0:
@@ -289,9 +344,9 @@ class Controller:
 			players = [players[1], players[0]]
 		self.won()
 
-	def player_vs_computer(self, com_level, starter = -1) -> None:
+	def player_vs_computer(self, com_level = 2, starter = -1) -> None:
 		'''Game of computer versus player'''
-		self.name = "Ultra Tic Tac Toe: Player vs Computer"
+		self.name = "Ultimate Tic Tac Toe: Player vs Computer"
 		self.start()
 		player = Player(board = self.board, mouse = self.mouse, marker_type = starter)
 		computer = Computer(board = self.board, marker_type = starter*(-1), max_recursion_depth = com_level)
@@ -304,7 +359,7 @@ class Controller:
 
 	def computer_vs_computer(self, com1_level = 8, com2_level = 8, starter = -1):
 		'''Watch two AIs battle'''
-		self.name = "Ultra Tic Tac Toe: Computer vs Computer"
+		self.name = "Ultimate Tic Tac Toe: Computer vs Computer"
 		self.start()
 		com1 = Computer(board = self.board, marker_type = starter, max_recursion_depth = com1_level)
 		com2 = Computer(board = self.board, marker_type = starter*(-1), max_recursion_depth = com2_level)
@@ -336,8 +391,7 @@ class Controller:
 			print("Circle won!")
 		elif winner == 10:
 			print("Tie!")
-		cv2.waitKey(2000)
+		cv2.waitKey(4000)
 
 if __name__ == "__main__":
 	controller = Controller()
-	controller.computer_vs_computer()
