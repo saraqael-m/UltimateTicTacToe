@@ -1,0 +1,46 @@
+body {
+	background-color: black;
+}
+
+.heading {
+	font-family: arial;
+	color: white;
+}
+
+.normal_text {
+	color:  white;
+}
+
+#big_table {
+	border:  2px solid white;
+	border-collapse: collapse;
+}
+
+#big_table_selected {
+	border:  2px solid yellow;
+	border-collapse: collapse;
+}
+
+#big_table_circle {
+	border:  2px solid red;
+	border-collapse: collapse;
+}
+
+#big_table_cross {
+	border:  2px solid blue;
+	border-collapse: collapse;
+}
+
+#small_table {
+	border:  1px solid white;
+	border-collapse: collapse;
+}
+
+.marker_btn {
+	background-color: black;
+	border: none;
+	color: white;
+	text-align: center;
+	display: inline-block;
+	font-size: 16px;
+}

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Play: Ultimate Tic Tac Toe</title>
+		<link href="style.css" rel="stylesheet" type="text/css">
+		<meta charset="UTF-8">
+		<meta name="description" content="Play an advanced version of tic tac toe called 'Ultimate Tic Tac Toe against' a friend or the computer.">
+		<meta name="author" content="Sahaquiel">
+		<meta name="keywords" content="Game,TicTacToe,ttt,Github">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<h1 class="heading">Play Ultimate Tic Tac Toe against a friend</h1>
+		<a href="index.html"><p style="color: white">&larr; Back</p></a>
+		<p class="normal_text">Current Player: <span id="current_player" style="color: blue;">cross</span></p>
+		<table>
+			<tbody>
+				<tr>
+					<th>
+						<table id="big_table" class="big_board">
+							<tbody id="big_table">
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,0,0,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,0,0,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,0,0,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,0,1,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,0,1,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,0,1,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,0,2,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,0,2,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,0,2,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							</tbody>
+						</table>
+					</th>
+					<th>
+						<table id="big_table" class="big_board">
+							<tbody id="big_table">
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,1,0,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,1,0,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,1,0,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,1,1,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,1,1,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,1,1,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,1,2,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,1,2,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,1,2,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							</tbody>
+						</table>
+					</th>
+					<th>
+						<table id="big_table" class="big_board">
+							<tbody id="big_table">
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,2,0,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,2,0,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,2,0,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,2,1,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,2,1,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,2,1,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,2,2,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,2,2,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[0,2,2,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							</tbody>
+						</table>
+					</th>
+				</tr>
+				<tr>
+					<th>
+						<table id="big_table" class="big_board">
+							<tbody id="big_table">
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,0,0,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,0,0,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,0,0,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,0,1,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,0,1,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,0,1,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,0,2,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,0,2,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,0,2,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							</tbody>
+						</table>
+					</th>
+					<th>
+						<table id="big_table" class="big_board">
+							<tbody id="big_table">
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,1,0,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,1,0,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,1,0,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,1,1,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,1,1,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,1,1,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,1,2,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,1,2,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,1,2,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							</tbody>
+						</table>
+					</th>
+					<th>
+						<table id="big_table" class="big_board">
+							<tbody id="big_table">
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,2,0,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,2,0,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,2,0,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,2,1,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,2,1,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,2,1,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,2,2,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,2,2,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[1,2,2,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							</tbody>
+						</table>
+					</th>
+				</tr>
+				<tr>
+					<th>
+						<table id="big_table" class="big_board">
+							<tbody id="big_table">
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,0,0,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,0,0,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,0,0,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,0,1,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,0,1,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,0,1,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,0,2,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,0,2,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,0,2,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							</tbody>
+						</table>
+					</th>
+					<th>
+						<table id="big_table" class="big_board">
+							<tbody id="big_table">
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,1,0,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,1,0,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,1,0,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,1,1,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,1,1,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,1,1,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,1,2,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,1,2,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,1,2,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							</tbody>
+						</table>
+					</th>
+					<th>
+						<table id="big_table" class="big_board">
+							<tbody id="big_table">
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,2,0,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,2,0,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,2,0,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,2,1,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,2,1,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,2,1,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							<tr>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,2,2,0])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,2,2,1])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+								<th id="small_table"><button class="marker_btn" onclick="posClicked(this,[2,2,2,2])"><img height="50" src="markers/blank.png" alt="-"></img></button></th>
+							</tr>
+							</tbody>
+						</table>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+		<button onclick="reset()">Restart</button>
+		<script src="play_friend.js"></script>
+	</body>
+</html>
