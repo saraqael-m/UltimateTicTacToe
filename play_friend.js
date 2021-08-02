@@ -1,6 +1,6 @@
 var bigBoard = [[0,0,0],[0,0,0],[0,0,0]];
 var smallBoard = [[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]],[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]],[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]]]
-var currentPlayer = 1;
+var currentPlayer = -1;
 var currentPlayerText = document.getElementById("current_player");
 var currentBoard = [null, null];
 var winner = 0;
@@ -8,8 +8,8 @@ var winner = 0;
 
 function posClicked(btn, markerPos) {
 	if (isPosValid(markerPos) && winner == 0) {
-		currentPlayer *= -1;
 		placeMarker(btn, markerPos, currentPlayer);
+		currentPlayer *= -1;
 	}
 }
 
