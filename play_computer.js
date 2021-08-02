@@ -19,7 +19,7 @@ function posClicked(btn, markerPos) {
 		diffSlider.disabled = true;
 		sliderIsActive = false;
 	}
-	if (currentPlayer == -1 && isPosValid(markerPos) && winner == 0) {
+	if (currentPlayer == playerMarker && isPosValid(markerPos) && winner == 0) {
 		placeMarker(markerPos, playerMarker, btn);
 		currentPlayer *= -1;
 		computerMove();
@@ -212,7 +212,7 @@ function won() {
 function reset() {
 	bigBoard = [[0,0,0],[0,0,0],[0,0,0]];
 	smallBoard = [[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]],[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]],[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]]]
-	currentPlayer = 1;
+	currentPlayer = -1;
 	currentBoard = [null, null];
 	winner = 0;
 	let markerBtns = document.getElementsByClassName("marker_btn")
@@ -225,4 +225,8 @@ function reset() {
 	}
 	currentPlayerText.innerHTML = "cross (player)";
 	currentPlayerText.style = "color: blue;";
+	if (sliderIsActive == false) {
+		diffSlider.disabled = false;
+		sliderIsActive = true;
+	}
 }
