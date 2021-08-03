@@ -2,14 +2,14 @@ var bigBoard = [[0,0,0],[0,0,0],[0,0,0]];
 var smallBoard = [[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]],[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]],[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]]]
 var currentPlayer = -1;
 var playerMarker = -1;
-var currentPlayerText = document.getElementById("current_player");
+const currentPlayerText = document.getElementById("current_player");
 var currentBoard = [null, null];
 var winner = 0;
 var recursionDepth;
 var currentMinimaxPlayer;
 var minimaxWinner;
 var currentMinimaxBoard;
-var diffSlider = document.getElementById("com_diff_slider");
+const diffSlider = document.getElementById("com_diff_slider");
 var sliderIsActive = true;
 var maxRecursionDepth = diffSlider.value*2;
 
