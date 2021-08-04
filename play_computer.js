@@ -2,16 +2,17 @@ var bigBoard = [[0,0,0],[0,0,0],[0,0,0]];
 var smallBoard = [[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]],[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]],[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]]]
 var currentPlayer = -1;
 var playerMarker = -1;
-const currentPlayerText = document.getElementById("current_player");
+var currentPlayerText = document.getElementById("current_player");
 var currentBoard = [null, null];
 var winner = 0;
 var recursionDepth;
 var currentMinimaxPlayer;
 var minimaxWinner;
 var currentMinimaxBoard;
-const diffSlider = document.getElementById("com_diff_slider");
+var diffSlider = document.getElementById("com_diff_slider");
 var sliderIsActive = true;
 var maxRecursionDepth = diffSlider.value*2;
+const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
 
 
 function posClicked(btn, markerPos) {
@@ -27,7 +28,7 @@ function posClicked(btn, markerPos) {
 }
 
 function diffSliderChanged(value) {
-	maxRecursionDepth = value*2
+	maxRecursionDepth = value*3
 }
 
 function placeMarker(markerPos, markerType, btn) {
@@ -83,27 +84,26 @@ function computerMove() {
 	currentMinimaxPlayer = -playerMarker;
 	minimaxWinner = 0;
 	currentMinimaxBoard = currentBoard.slice();
-	let markerPos = minimax(-2, 2, 1)[1];
+	let markerPos = minimax(-4, 4, 1)[1];
 	placeMarker(markerPos, -1*playerMarker, document.getElementsByTagName("button")[27*markerPos[0]+9*markerPos[1]+3*markerPos[2]+1*markerPos[3]]);
 	currentPlayer *= -1;
 }
 
 function minimax(alpha, beta, minimaxType) {
+	minimaxWinner = isBoardWon(bigBoard);
+	if (minimaxWinner != 0) {
+		if (minimaxWinner == null) {
+			return [0, [0,0,0,0]];
+		}
+		return [-3*minimaxWinner*playerMarker, [0,0,0,0]];
+	}
 	recursionDepth++;
 	if (recursionDepth >= maxRecursionDepth) {
 		recursionDepth--;
 		return [-1*evaluateBoardState()*playerMarker, [0,0,0,0]];
 	}
-	let extremeVal = -2*minimaxType;
+	let extremeVal = -4*minimaxType;
 	let pos = [null, null, null, null];
-	minimaxWinner = isBoardWon(bigBoard);
-	if (minimaxWinner != 0) {
-		recursionDepth--;
-		if (minimaxWinner == null) {
-			return [0, [0,0,0,0]];
-		}
-		return [-1*minimaxWinner*playerMarker, [0,0,0,0]];
-	}
 	let possibleMoves = [];
 	let prevCurrentBoard = currentMinimaxBoard.slice();
 	if (currentMinimaxBoard[0] != null) {
@@ -163,9 +163,17 @@ function minimax(alpha, beta, minimaxType) {
 }
 
 function evaluateBoardState() {
-	//console.log(bigBoard);
-	//console.log(bigBoard.flat().reduce((a, b) => a + b, 0)/9);
-	return bigBoard.flat().reduce((a, b) => a + b, 0)/9;
+	let almostWinSum = 0;
+	let sumList;
+	for (let x = 0; x < 3; x++) {
+		for (let y = 0; y < 3; y++) {
+			if (bigBoard[x][y] == 0) {
+				sumList = getSumList(smallBoard[x][y]);
+				almostWinSum += countOccurrences(sumList, 2) - countOccurrences(sumList, -2);
+			}
+		}
+	}
+	return (bigBoard.flat().reduce((a, b) => a + b, 0)/9) + (almostWinSum/60);
 }
 
 function isPosValid(markerPos) {
@@ -180,9 +188,7 @@ function isPosValid(markerPos) {
 }
 
 function isBoardWon(board) {
-	let sumList = [board[0][0]+board[1][1]+board[2][2], board[2][0]+board[1][1]+board[0][2]];
-	sumList.push.apply(sumList, board.map(r => r.reduce((a, b) => a + b)));
-	sumList.push.apply(sumList, board.reduce((a, b) => a.map((x, i) => x + b[i])));
+	let sumList = getSumList(board);
 	if (sumList.includes(-3)) {
 		// cross won board
 		return -1;
@@ -194,6 +200,13 @@ function isBoardWon(board) {
 		return 0;
 	}
 	return null;
+}
+
+function getSumList(board) {
+	let sumList = [board[0][0]+board[1][1]+board[2][2], board[2][0]+board[1][1]+board[0][2]];
+	sumList.push.apply(sumList, board.map(r => r.reduce((a, b) => a + b)));
+	sumList.push.apply(sumList, board.reduce((a, b) => a.map((x, i) => x + b[i])));
+	return sumList;
 }
 
 function won() {
