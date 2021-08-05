@@ -1,9 +1,10 @@
 var bigBoard = [[0,0,0],[0,0,0],[0,0,0]];
 var smallBoard = [[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]],[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]],[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]]]
 var currentPlayer = -1;
-var currentPlayerText = document.getElementById("current_player");
+const currentPlayerText = document.getElementById("current_player");
 var currentBoard = [null, null];
 var winner = 0;
+var lastMove;
 
 
 function posClicked(btn, markerPos) {
@@ -13,8 +14,14 @@ function posClicked(btn, markerPos) {
 	}
 }
 
-function placeMarker(btn, markerPos, markerType) {
+function placeMarker(btn, markerPos, markerType, isNew = true) {
 	//setting variables
+	if (isNew) {
+		if (lastMove != undefined) {
+			placeMarker(lastMove[0], lastMove[1], lastMove[2], false);
+		}
+		lastMove = [btn, markerPos, markerType];
+	}
 	smallBoard[markerPos[0]][markerPos[1]][markerPos[2]][markerPos[3]] = markerType;
 	bigBoard[markerPos[0]][markerPos[1]] = isBoardWon(smallBoard[markerPos[0]][markerPos[1]]);
 	winner = isBoardWon(bigBoard);
@@ -24,21 +31,25 @@ function placeMarker(btn, markerPos, markerType) {
 		currentBoard = [null, null];
 	}
 	//outputting to website
-	drawMarker(btn, markerPos, markerType);
+	drawMarker(btn, markerPos, markerType, isNew);
 }
 
-function drawMarker(btn, markerPos, markerType) {
+function drawMarker(btn, markerPos, markerType, isNew) {
 	let upperTable = btn.parentElement.parentElement.parentElement;
 	upperTable.id = "big_table"; //remove highlighting
 	if (currentBoard[0] != null && winner == 0) {
 		upperTable.parentElement.parentElement.parentElement.parentElement.children[currentBoard[0]].children[currentBoard[1]].children[0].children[0].id = "big_table_selected";
 	}
+	let extension = "";
+	if (isNew) {
+		extension = "New";
+	}
 	if (markerType == 1) {
-		btn.firstChild.src = "markers/circle.png";
+		btn.firstChild.src = "markers/circle"+extension+".png";
 		currentPlayerText.innerHTML = "cross";
 		currentPlayerText.style = "color: blue;";
 	} else if (markerType == -1) {
-		btn.firstChild.src = "markers/cross.png";
+		btn.firstChild.src = "markers/cross"+extension+".png";
 		currentPlayerText.innerHTML = "circle";
 		currentPlayerText.style = "color: red;";
 	}
